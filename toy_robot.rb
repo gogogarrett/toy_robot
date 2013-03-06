@@ -1,24 +1,20 @@
 class ToyRobot
   attr_accessor :dir, :x, :y
   DIRECTIONS = %w/NORTH EAST SOUTH WEST/ 
+  DIRECTION_COORDS = [ [0, 1], [0, -1], [1, 0], [-1, 0] ]
 
   def place(x, y, dir)
     @x = x.to_i
     @y = y.to_i
     @dir = dir
+
+    raise "Error: Outside Board" unless @x.between?(0, 4) && @y.between?(0, 4)
   end
 
   def move
-    case @dir
-    when "NORTH"
-      @y += 1
-    when "SOUTH"
-      @y -= 1
-    when "EAST"
-      @x += 1
-    else "WEST"
-      @x -= 1
-    end
+    da_coords = DIRECTION_COORDS[DIRECTIONS.index( @dir )]
+    @x += da_coords[0] if (@x + da_coords[0]).between?(0, 4)
+    @y += da_coords[1] if (@y + da_coords[1]).between?(0, 4)
   end
 
   def left

@@ -30,8 +30,15 @@ describe ToyRobot do
   end
 
   it "should not fall off" do
-    subject.place("5", "5", "NORTH")
-    subject.move.should == false
+    subject.place("4", "4", "NORTH")
+    subject.move
+    subject.report.should == "4, 4, NORTH"
+  end
+
+  it "should not start outside of the board" do
+    expect {
+      subject.place("5", "5", "NORTH")
+    }.to raise_error("Error: Outside Board")
   end
 
 end
